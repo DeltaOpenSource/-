@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дорожка — дневник пловца</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Unbounded:wght@500;700&display=swap">
+<style>
+:root{--bg:#eaf4f7;--card:#fff;--tx:#0a2433;--mu:#587384;--ac:#0a6fb8;--bd:#d3e3ea;--in:#f4fafc;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07151e;--card:#0e2431;--tx:#e6f2f7;--mu:#8fb0c0;--ac:#4cb8f5;--bd:#1b3a4b;--in:#0a1c27;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#07151e;--card:#0e2431;--tx:#e6f2f7;--mu:#8fb0c0;--ac:#4cb8f5;--bd:#1b3a4b;--in:#0a1c27;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Manrope,system-ui,sans-serif}
+.rope{height:8px;background:repeating-linear-gradient(90deg,#e8483b 0 28px,#fff 28px 56px,#0a6fb8 56px 84px,#fff 84px 112px);opacity:.9}
+header,main{max-width:1100px;margin:0 auto;padding:0 16px}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:18px;padding-bottom:10px}
+h1{font:700 22px Unbounded,Manrope,sans-serif;margin:0;letter-spacing:-.3px}
+h2{font:600 16px Unbounded,Manrope,sans-serif;margin:0 0 12px}
+nav{display:flex;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:4px}
+nav button{border:0;background:none;color:var(--mu);font:700 14px Manrope,sans-serif;padding:8px 16px;border-radius:9px;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;border-left:4px solid var(--ac)}
+.kpi b{display:block;font:700 24px Unbounded,Manrope,sans-serif}
+.kpi span{color:var(--mu);font-size:13px}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--mu);font-weight:600}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--in);border:1px solid var(--bd);border-radius:9px;padding:9px 10px;width:100%}
+.wide{grid-column:1/-1}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:11px 18px;font:800 14px Manrope,sans-serif;cursor:pointer}
+.btn.ghost{background:none;color:var(--ac);border:1px solid var(--bd)}
+.row{display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--bd)}
+.row:first-child{border-top:0}
+.row .d{font-weight:800}.row .d small{display:block;color:var(--mu);font-weight:400}
+.row .m{color:var(--mu);font-size:13px}.row .m b{color:var(--tx);font-size:15px}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;background:var(--in);border:1px solid var(--bd);font-size:12px;margin-right:4px;color:var(--mu)}
+.x{background:none;border:0;color:var(--mu);font-size:20px;cursor:pointer;padding:4px 8px}
+.cv{position:relative;height:270px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.bar select{width:auto}
+ul.ins{margin:0;padding-left:18px}ul.ins li{margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{padding:7px 6px;border-top:1px solid var(--bd);text-align:left}th{color:var(--mu);font-weight:600;border-top:0}
+.empty{color:var(--mu);text-align:center;padding:28px 8px}
+.hid{display:none}
+.tpls{display:flex;flex-wrap:wrap;gap:6px}.tpls .btn{padding:7px 12px;font-size:13px}
+.blk{border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:10px;background:var(--in)}
+.blk input,.blk select{background:var(--card)}
+.bh{display:flex;align-items:center;gap:6px;margin-bottom:6px}.bh input{font-weight:800;flex:1}.bh b{white-space:nowrap}
+.set{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:6px 0;border-top:1px dashed var(--bd)}
+.set input,.set select{width:auto;padding:7px 8px}
+.blk>.btn{padding:6px 12px;font-size:13px;margin-top:4px}
+details{margin-top:6px}summary{cursor:pointer;color:var(--ac);font-weight:600}details div{margin-top:4px}
+@media(max-width:520px){.row{grid-template-columns:70px 1fr auto}}
+</style>
+</head>
+<body>
+<div class="rope"></div>
+<header>
+  <h1>Дорожка</h1>
+  <nav><button id="t1" class="on">Тренировки</button><button id="t2">Аналитика</button></nav>
+</header>
+<main>
+<section id="p1">
+  <div class="card">
+    <h2>Новая тренировка</h2>
+    <form id="f">
+      <label>Дата<input type="date" id="date" required></label>
+      <label>Цель<select id="type"><option>Выносливость</option><option>Скорость</option><option>Техника</option><option>Интервалы</option><option>Восстановление</option><option>Соревнование</option></select></label>
+      
+      <label>Бассейн<select id="pool"><option>25 м</option><option>50 м</option><option>Открытая вода</option></select></label>
+      <label>Дистанция (считается сама)<input id="dist" readonly></label>
+      <label>Время, мин<input type="number" id="dur" min="1" step="0.5" placeholder="60" required></label>
+      <label>Нагрузка (1–10)<input type="number" id="rpe" min="1" max="10" value="6" required></label>
+      <div class="wide"><label>Шаблон тренировки</label><div class="tpls" id="tpls"></div></div>
+      <div class="wide" id="blocks"></div>
+      <div class="wide"><button type="button" class="btn ghost" id="ab">+ Добавить блок</button></div>
+      <datalist id="bn"><option>Разминка</option><option>Подготовка</option><option>Упражнения</option><option>Основная часть</option><option>Заминка</option></datalist>
+      <label class="wide">Заметки<textarea id="note" rows="2" placeholder="Самочувствие, пульс, что получилось или нет"></textarea></label>
+      <div class="wide"><button class="btn" type="submit">Сохранить тренировку</button><span id="ok" style="margin-left:10px;color:var(--mu)"></span></div>
+    </form>
+  </div>
+  <div class="card"><h2>Журнал</h2><div id="list"></div></div>
+</section>
+
+<section id="p2" class="hid">
+  <div class="bar"><label style="flex-direction:row;align-items:center;gap:8px">Период
+    <select id="per"><option value="28">4 недели</option><option value="90" selected>3 месяца</option><option value="180">6 месяцев</option><option value="365">Год</option><option value="0">Всё время</option></select></label></div>
+  <div id="an"></div>
+</section>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const KEY='swimlog.v1',$=id=>document.getElementById(id);
+let W=[];try{W=JSON.parse(localStorage.getItem(KEY))||[]}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(W))}catch(e){}};
+const DAY=864e5,pd=s=>new Date(s+'T00:00:00'),iso=d=>{const z=new Date(d.getTime()-d.getTimezoneOffset()*6e4);return z.toISOString().slice(0,10)};
+const pace=w=>w.dur*60/(w.dist/100);
+const fp=s=>isFinite(s)&&s>0?Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0'):'—';
+const fd=s=>pd(s).toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
+const fk=m=>(m/1000).toFixed(m>=10000?1:2).replace('.',',')+' км';
+const ft=m=>m>=60?Math.floor(m/60)+' ч '+Math.round(m%60)+' мин':Math.round(m)+' мин';
+const mon=d=>{const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-(x.getDay()+6)%7);return x};
+const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+const C=['#0a6fb8','#14b8a6','#f59e0b','#8b5cf6','#e8483b','#64748b'];
+$('date').value=iso(new Date());
+
+$('t1').onclick=()=>tab(1);$('t2').onclick=()=>tab(2);
+function tab(n){$('p1').classList.toggle('hid',n!=1);$('p2').classList.toggle('hid',n!=2);$('t1').classList.toggle('on',n==1);$('t2').classList.toggle('on',n==2);if(n==2)analytics()}
+
+
+
+function list(){
+  const a=[...W].sort((x,y)=>y.date.localeCompare(x.date)||y.id-x.id);
+  if(!a.length){$('list').innerHTML='<div class="empty">Пока пусто. Добавьте первую тренировку выше или <button class="btn ghost" id="demo">загрузите демо-данные</button></div>';$('demo').onclick=demo;return}
+  $('list').innerHTML=a.map(w=>`<div class="row"><div class="d">${fd(w.date)}<small>${pd(w.date).toLocaleDateString('ru-RU',{weekday:'short'})}</small></div>
+  <div class="m"><b>${(w.dist/1000).toFixed(2).replace('.',',')} км</b> за ${ft(w.dur)}, темп ${fp(pace(w))}/100 м, нагрузка ${w.rpe}/10<br><span class="tag">${w.type}</span><span class="tag">${w.stroke}</span><span class="tag">${w.pool}</span>${esc(w.note)}${det(w)}</div>
+  <div><button class="x" data-rep="${w.id}" aria-label="Повторить" title="Повторить">↻</button><button class="x" data-id="${w.id}" aria-label="Удалить">×</button></div></div>`).join('');
+  document.querySelectorAll('[data-rep]').forEach(b=>b.onclick=()=>repeat(b.dataset.rep));document.querySelectorAll('.x[data-id]').forEach(b=>b.onclick=()=>{if(b.dataset.ask){W=W.filter(w=>w.id!=b.dataset.id);save();list()}else{b.dataset.ask=1;b.textContent='Удалить?';b.style.color='#e8483b';b.style.fontSize='13px';setTimeout(()=>{delete b.dataset.ask;b.textContent='×';b.style.color='';b.style.fontSize=''},3000)}});
+}
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function demo(){
+  const T=['Выносливость','Скорость','Техника','Интервалы','Восстановление'],S=['Кроль','Кроль','Кроль','Комплекс','Брасс','На спине'];
+  const now=new Date();let id=1;
+  for(let i=84;i>=0;i--){const d=new Date(now-i*DAY),g=(d.getDay()+6)%7;if(![0,2,3,5].includes(g)&&Math.random()>.15)continue;
+    const t=T[Math.floor(Math.random()*5)],k=1+(84-i)/84*.25,dist=Math.round((2200+Math.random()*1800)*k/100)*100,sp=(1.62-(84-i)/84*.1)*(t=='Восстановление'?1.12:1)+Math.random()*.08;
+    W.push({id:id++,date:iso(d),type:t,stroke:S[Math.floor(Math.random()*6)],pool:g==5?'50 м':'25 м',dist,dur:Math.round(dist/100*sp*2)/2,rpe:t=='Восстановление'?3:t=='Интервалы'||t=='Скорость'?8:6,note:''})}
+  save();list()}
+
+let ch={};
+function mk(id,cfg){if(ch[id])ch[id].destroy();cfg.options=Object.assign({responsive:true,maintainAspectRatio:false},cfg.options);ch[id]=new Chart($(id),cfg)}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+$('per').onchange=analytics;
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if(!$('p2').classList.contains('hid'))analytics()});
+
+function analytics(){
+  const days=+$('per').value,now=new Date(),from=days?new Date(now-days*DAY):null;
+  const a=W.filter(w=>!from||pd(w.date)>=from).sort((x,y)=>x.date.localeCompare(y.date));
+  const el=$('an');
+  if(!a.length){el.innerHTML='<div class="card empty">За выбранный период нет тренировок. Добавьте их на вкладке «Тренировки».</div>';return}
+  Chart.defaults.color=css('--mu');Chart.defaults.borderColor=css('--bd');Chart.defaults.font.family='Manrope,sans-serif';
+  const dist=sum(a,w=>w.dist),dur=sum(a,w=>w.dur),avgP=dur*60/(dist/100);
+  const t0=pd(a[0].date),wk=Math.max(1,Math.ceil((now-t0)/DAY/7));
+  const dset=new Set(W.map(w=>w.date));let st=0,c=new Date();c.setHours(0,0,0,0);if(!dset.has(iso(c)))c=new Date(c-DAY);while(dset.has(iso(c))){st++;c=new Date(c-DAY)}
+  // weekly
+  const wm={};for(let d=mon(t0);d<=now;d=new Date(d.getTime()+7*DAY)){wm[iso(d)]={dist:0,n:0,load:0}}
+  a.forEach(w=>{const k=iso(mon(pd(w.date))),o=wm[k];if(o){o.dist+=w.dist;o.n++;o.load+=w.dist*w.rpe/1000}});
+  const wl=Object.keys(wm),wv=wl.map(k=>wm[k]);
+  const bestW=Math.max(...wv.map(x=>x.dist));
+  // monthly
+  const mm={};a.forEach(w=>{const k=w.date.slice(0,7);mm[k]=(mm[k]||0)+w.dist});
+  const by=(f)=>{const o={};a.forEach(w=>o[w[f]]=(o[w[f]]||0)+w.dist);return o};
+  const typ=by('type'),stk={};a.forEach(w=>{if(w.blocks)w.blocks.forEach(b=>b.sets.forEach(s=>{const m=s.n*s.d;if(m)stk[s.s]=(stk[s.s]||0)+m}));else stk[w.stroke]=(stk[w.stroke]||0)+w.dist});
+  const wd=[0,0,0,0,0,0,0],wc=[0,0,0,0,0,0,0];a.forEach(w=>{const g=(pd(w.date).getDay()+6)%7;wd[g]+=w.dist;wc[g]++});
+  const bd=wc.indexOf(Math.max(...wc)),DN=['понедельник','вторник','среду','четверг','пятницу','субботу','воскресенье'];
+  // compare 4w vs prev 4w (all data)
+  const r=(x,y)=>sum(W.filter(w=>{const t=pd(w.date);return t>=new Date(now-x*DAY)&&t<new Date(now-y*DAY)}),w=>w.dist);
+  const l4=r(28,0),p4=r(56,28),chg=p4?Math.round((l4-p4)/p4*100):null;
+  const fast=a.filter(w=>w.dist>=1000).sort((x,y)=>pace(x)-pace(y));
+  const half=Math.floor(a.length/2),pa=sum(a.slice(0,half),w=>w.dur*60)/Math.max(1,sum(a.slice(0,half),w=>w.dist/100)),pb=sum(a.slice(half),w=>w.dur*60)/Math.max(1,sum(a.slice(half),w=>w.dist/100));
+  const ins=[];
+  if(chg!==null)ins.push(`Последние 4 недели: ${fk(l4)}, это ${chg>=0?'на '+chg+'% больше':'на '+Math.abs(chg)+'% меньше'}, чем за предыдущие 4 недели (${fk(p4)}).${chg>30?' Рост выше 30% повышает риск перегрузки.':''}`);
+  if(a.length>3)ins.push(`Темп во второй половине периода ${pb<pa?'быстрее':'медленнее'} на ${Math.abs(Math.round(pa-pb))} с/100 м (${fp(pa)} → ${fp(pb)}).`);
+  ins.push(`Чаще всего вы плаваете в ${DN[bd]}: ${wc[bd]} трен.`);
+  const hard=a.filter(w=>w.rpe>=8).length;ins.push(`Тяжёлых тренировок (8+ из 10): ${Math.round(hard/a.length*100)}%. ${hard/a.length>.35?'Пожалуй, многовато: добавьте восстановительных.':'Баланс нагрузки выглядит нормально.'}`);
+  const top=[...a].sort((x,y)=>y.dist-x.dist).slice(0,5);
+  el.innerHTML=`
+  <div class="grid kpis">
+   <div class="kpi"><b>${fk(dist)}</b><span>Общий объём</span></div>
+   <div class="kpi"><b>${a.length}</b><span>Тренировок</span></div>
+   <div class="kpi"><b>${ft(dur)}</b><span>Время в воде</span></div>
+   <div class="kpi"><b>${fp(avgP)}</b><span>Средний темп на 100 м</span></div>
+   <div class="kpi"><b>${(sum(a,w=>w.rpe)/a.length).toFixed(1).replace('.',',')}</b><span>Средняя нагрузка</span></div>
+   <div class="kpi"><b>${fk(dist/a.length)}</b><span>Средняя тренировка</span></div>
+   <div class="kpi"><b>${(a.length/Math.min(wk,wl.length||1)).toFixed(1).replace('.',',')}</b><span>Тренировок в неделю</span></div>
+   <div class="kpi"><b>${fk(bestW)}</b><span>Лучшая неделя</span></div>
+   <div class="kpi"><b>${st} дн.</b><span>Серия подряд</span></div>
+  </div>
+  <div class="card"><h2>Выводы</h2><ul class="ins">${ins.map(x=>'<li>'+x+'</li>').join('')}</ul></div>
+  <div class="grid g2">
+   <div class="card"><h2>Объём по неделям, км</h2><div class="cv"><canvas id="c1"></canvas></div></div>
+   <div class="card"><h2>Темп по тренировкам, мин/100 м</h2><div class="cv"><canvas id="c2"></canvas></div></div>
+   <div class="card"><h2>Нагрузка по неделям (км × усилие)</h2><div class="cv"><canvas id="c3"></canvas></div></div>
+   <div class="card"><h2>Объём по месяцам, км</h2><div class="cv"><canvas id="c4"></canvas></div></div>
+   <div class="card"><h2>Стили, доля объёма</h2><div class="cv"><canvas id="c5"></canvas></div></div>
+   <div class="card"><h2>Типы тренировок, доля объёма</h2><div class="cv"><canvas id="c6"></canvas></div></div>
+   <div class="card"><h2>Объём по дням недели, км</h2><div class="cv"><canvas id="c7"></canvas></div></div>
+   <div class="card"><h2>Усилие и темп</h2><div class="cv"><canvas id="c8"></canvas></div></div>
+   <div class="card"><h2>Объём по интенсивности, км (по описанным тренировкам)</h2><div class="cv"><canvas id="c9"></canvas></div></div>
+  </div>
+  <div class="grid g2">
+   <div class="card"><h2>Самые длинные</h2><table><tr><th>Дата</th><th>Дистанция</th><th>Темп</th><th>Тип</th></tr>${top.map(w=>`<tr><td>${fd(w.date)}</td><td>${fk(w.dist)}</td><td>${fp(pace(w))}</td><td>${w.type}</td></tr>`).join('')}</table></div>
+   <div class="card"><h2>Самый быстрый темп (от 1 км)</h2>${fast.length?`<table><tr><th>Дата</th><th>Дистанция</th><th>Темп</th><th>Стиль</th></tr>${fast.slice(0,5).map(w=>`<tr><td>${fd(w.date)}</td><td>${fk(w.dist)}</td><td>${fp(pace(w))}</td><td>${w.stroke}</td></tr>`).join('')}</table>`:'<div class="empty">Нет тренировок от 1 км</div>'}</div>
+  </div>`;
+  const km=v=>+(v/1000).toFixed(2),wlab=wl.map(k=>fd(k)),tk={callback:v=>fp(v)};
+  mk('c1',{type:'bar',data:{labels:wlab,datasets:[{data:wv.map(x=>km(x.dist)),backgroundColor:C[0],borderRadius:4}]},options:{plugins:{legend:{display:false}}}});
+  const pts=a.map(w=>pace(w)),ma=pts.map((_,i)=>{const s=pts.slice(Math.max(0,i-4),i+1);return s.reduce((x,y)=>x+y,0)/s.length});
+  mk('c2',{type:'line',data:{labels:a.map(w=>fd(w.date)),datasets:[{label:'Тренировка',data:pts,borderColor:C[1],pointRadius:3,tension:.2},{label:'Среднее за 5',data:ma,borderColor:C[4],borderWidth:3,pointRadius:0,tension:.3}]},options:{scales:{y:{ticks:tk}},plugins:{tooltip:{callbacks:{label:x=>x.dataset.label+': '+fp(x.parsed.y)}}}}});
+  mk('c3',{type:'line',data:{labels:wlab,datasets:[{data:wv.map(x=>+x.load.toFixed(1)),borderColor:C[2],backgroundColor:C[2]+'33',fill:true,tension:.3}]},options:{plugins:{legend:{display:false}}}});
+  mk('c4',{type:'bar',data:{labels:Object.keys(mm).map(k=>new Date(k+'-01').toLocaleDateString('ru-RU',{month:'short',year:'2-digit'})),datasets:[{data:Object.values(mm).map(km),backgroundColor:C[3],borderRadius:4}]},options:{plugins:{legend:{display:false}}}});
+  const dn=(o)=>({type:'doughnut',data:{labels:Object.keys(o),datasets:[{data:Object.values(o).map(km),backgroundColor:C,borderColor:css('--card')}]},options:{plugins:{legend:{position:'right'}}}});
+  mk('c5',dn(stk));mk('c6',dn(typ));
+  const zn={'Лёгко':0,'Средне':0,'Тяжело':0,'Максимум':0};a.forEach(w=>(w.blocks||[]).forEach(b=>b.sets.forEach(s=>{if(s.z in zn)zn[s.z]+=s.n*s.d})));
+  mk('c9',{type:'bar',data:{labels:Object.keys(zn),datasets:[{data:Object.values(zn).map(km),backgroundColor:[C[1],C[0],C[2],C[4]],borderRadius:4}]},options:{plugins:{legend:{display:false}}}});
+  mk('c7',{type:'bar',data:{labels:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],datasets:[{data:wd.map(km),backgroundColor:C[1],borderRadius:4}]},options:{plugins:{legend:{display:false}}}});
+  mk('c8',{type:'scatter',data:{datasets:[{label:'Тренировки',data:a.map(w=>({x:w.rpe,y:pace(w)})),backgroundColor:C[0]}]},options:{scales:{x:{min:0,max:10,title:{display:true,text:'Усилие (1–10)'}},y:{ticks:tk}},plugins:{legend:{display:false},tooltip:{callbacks:{label:x=>'усилие '+x.parsed.x+', темп '+fp(x.parsed.y)}}}}});
+}
+/* ---- конструктор тренировки ---- */
+const ST=['Кроль','Брасс','На спине','Баттерфляй','Комплекс','Ноги','Руки'],ZN=['Лёгко','Средне','Тяжело','Максимум'];
+const TPL={
+'Разминка · основа · заминка':[['Разминка',[[1,400,'Кроль','Лёгко','','Свободно'],[4,50,'Комплекс','Лёгко','0:15','Техника'],[4,25,'Кроль','Средне','0:15','Нарастающий темп']]],['Основная часть',[[4,200,'Кроль','Средне','0:30','']]],['Заминка',[[1,200,'Кроль','Лёгко','','Расслабленно']]]],
+'Выносливость':[['Разминка',[[1,400,'Кроль','Лёгко','',''],[4,100,'Комплекс','Лёгко','0:15','']]],['Основная часть',[[5,400,'Кроль','Средне','0:40','Ровный темп']]],['Заминка',[[1,300,'Кроль','Лёгко','','']]]],
+'Скорость':[['Разминка',[[1,400,'Кроль','Лёгко','',''],[4,50,'Кроль','Средне','0:20','Нарастающий']]],['Подготовка',[[6,25,'Кроль','Тяжело','0:30','Старт и скорость']]],['Основная часть',[[8,50,'Кроль','Максимум','1:00','Спринт'],[4,100,'Кроль','Тяжело','1:30','']]],['Заминка',[[1,300,'Кроль','Лёгко','','']]]],
+'Техника':[['Разминка',[[1,300,'Кроль','Лёгко','',''],[4,50,'Ноги','Лёгко','0:15','С доской']]],['Упражнения',[[6,50,'Кроль','Лёгко','0:20','Ловля воды, кулачки'],[4,100,'Комплекс','Средне','0:20','Повороты']]],['Заминка',[[1,200,'Брасс','Лёгко','','']]]],
+'Интервалы':[['Разминка',[[1,400,'Кроль','Лёгко','',''],[4,50,'Кроль','Средне','0:15','']]],['Основная часть',[[10,100,'Кроль','Тяжело','1:40','Держать темп во всех повторах']]],['Заминка',[[1,200,'Кроль','Лёгко','','']]]],
+'Восстановление':[['Разминка',[[1,200,'Кроль','Лёгко','','']]],['Основная часть',[[4,200,'Комплекс','Лёгко','0:20','Расслабленно'],[4,50,'На спине','Лёгко','0:15','']]],['Заминка',[[1,100,'Брасс','Лёгко','','']]]],
+'Пустой':[['Основная часть',[[1,100,'Кроль','Средне','','']]]]};
+const fromT=t=>t.map(([name,sets])=>({name,sets:sets.map(([n,d,s,z,i,c])=>({n,d,s,z,i,c}))}));
+let B=fromT(TPL['Разминка · основа · заминка']);
+const bt=b=>sum(b.sets,s=>(+s.n||0)*(+s.d||0)),tot=()=>sum(B,bt);
+const opt=(a,v)=>a.map(x=>`<option${x==v?' selected':''}>${x}</option>`).join('');
+const at=(i,j,k)=>`data-b="${i}" data-s="${j}" data-k="${k}"`;
+function upd(){B.forEach((b,i)=>{const e=$('bt'+i);if(e)e.textContent=bt(b)+' м'});$('dist').value=tot()+' м'}
+function rb(){
+ $('blocks').innerHTML=B.map((b,i)=>`<div class="blk"><div class="bh"><input data-b="${i}" data-k="name" list="bn" value="${esc(b.name)}" aria-label="Название блока"><b id="bt${i}"></b>
+  <button type="button" class="x" data-a="up" data-b="${i}" title="Выше">↑</button><button type="button" class="x" data-a="dn" data-b="${i}" title="Ниже">↓</button><button type="button" class="x" data-a="db" data-b="${i}" title="Удалить блок">×</button></div>
+  ${b.sets.map((s,j)=>`<div class="set"><input type="number" min="1" style="width:60px" ${at(i,j,'n')} value="${s.n}" aria-label="Повторы">×<input type="number" min="25" step="25" style="width:88px" ${at(i,j,'d')} value="${s.d}" aria-label="Метров">м<select ${at(i,j,'s')}>${opt(ST,s.s)}</select><select ${at(i,j,'z')}>${opt(ZN,s.z)}</select><input style="width:90px" placeholder="Отдых" ${at(i,j,'i')} value="${esc(s.i)}"><input style="flex:1 1 150px" placeholder="Комментарий" ${at(i,j,'c')} value="${esc(s.c)}"><button type="button" class="x" data-a="ds" data-b="${i}" data-s="${j}" title="Удалить серию">×</button></div>`).join('')}
+  <button type="button" class="btn ghost" data-a="as" data-b="${i}">+ Серия</button></div>`).join('');
+ upd()}
+$('blocks').addEventListener('input',e=>{const t=e.target,k=t.dataset.k;if(!k)return;const b=B[t.dataset.b];if(k=='name')b.name=t.value;else b.sets[t.dataset.s][k]=(k=='n'||k=='d')?+t.value:t.value;upd()});
+$('blocks').addEventListener('click',e=>{const t=e.target.closest('[data-a]');if(!t)return;const i=+t.dataset.b,a=t.dataset.a;
+ if(a=='as'){const l=B[i].sets.slice(-1)[0]||{};B[i].sets.push({n:l.n||1,d:l.d||100,s:l.s||'Кроль',z:l.z||'Средне',i:'',c:''})}
+ else if(a=='ds')B[i].sets.splice(+t.dataset.s,1);
+ else if(a=='db')B.splice(i,1);
+ else if(a=='up'&&i>0)[B[i-1],B[i]]=[B[i],B[i-1]];
+ else if(a=='dn'&&i<B.length-1)[B[i+1],B[i]]=[B[i],B[i+1]];
+ rb()});
+$('tpls').innerHTML=Object.keys(TPL).map(k=>`<button type="button" class="btn ghost" data-t="${k}">${k}</button>`).join('');
+$('tpls').onclick=e=>{const k=e.target.dataset.t;if(!k)return;B=fromT(TPL[k]);if([...$('type').options].some(o=>o.value==k))$('type').value=k;rb()};
+$('ab').onclick=()=>{B.push({name:'Новый блок',sets:[{n:1,d:100,s:'Кроль',z:'Средне',i:'',c:''}]});rb()};
+const det=w=>w.blocks?`<details><summary>Состав тренировки</summary>${w.blocks.map(b=>`<div><b>${esc(b.name)}</b>, ${bt(b)} м${b.sets.map(s=>`<div>${s.n>1?s.n+'×':''}${s.d} м ${s.s}${s.i?', отдых '+esc(s.i):''}, ${s.z}${s.c?'. '+esc(s.c):''}</div>`).join('')}</div>`).join('')}</details>`:'';
+function repeat(id){const w=W.find(x=>x.id==id);if(!w)return;B=w.blocks?JSON.parse(JSON.stringify(w.blocks)):[{name:'Основная часть',sets:[{n:1,d:w.dist,s:w.stroke,z:'Средне',i:'',c:''}]}];$('type').value=w.type;$('pool').value=w.pool;$('dur').value=w.dur;$('rpe').value=w.rpe;rb();scrollTo({top:0,behavior:'smooth'})}
+$('f').onsubmit=e=>{e.preventDefault();
+ const bs=B.map(b=>({name:b.name||'Блок',sets:b.sets.filter(s=>s.n>0&&s.d>0)})).filter(b=>b.sets.length),dist=sum(bs,bt);
+ if(!dist){$('ok').textContent='Добавьте хотя бы одну серию: повторы и дистанцию';return}
+ const m={};bs.forEach(b=>b.sets.forEach(s=>m[s.s]=(m[s.s]||0)+s.n*s.d));
+ W.push({id:Date.now(),date:$('date').value,type:$('type').value,stroke:Object.keys(m).sort((x,y)=>m[y]-m[x])[0],pool:$('pool').value,dist,dur:+$('dur').value,rpe:+$('rpe').value,note:$('note').value.trim(),blocks:bs});
+ save();$('dur').value='';$('note').value='';list();$('ok').textContent='Тренировка сохранена';setTimeout(()=>$('ok').textContent='',3000)};
+rb();list();
+</script>
+</body>
+</html>
